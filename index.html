@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suivi de l’association</title>
+<style>
+:root{--bg:#f6f5fa;--fg:#1d2040;--mu:#5f6283;--ac:#27337a;--on:#fff;--ac2:#e9a800;--bd:#d9d8e6;--ok:#d6efe2;--okf:#0f5a3a;--ko:#fbe2e2;--kof:#952a2a;--cd:#fff;--hd:#ebe9f4;--side:#1f2a63;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111430;--fg:#ecebf8;--mu:#a3a6c6;--ac:#aeb8ff;--on:#111430;--ac2:#f2b705;--bd:#353a66;--ok:#17402f;--okf:#9fe2c1;--ko:#4a1f26;--kof:#f4a9a9;--cd:#1a1e40;--hd:#232850;--side:#0b0d24;color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
+.shell{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+aside{background:var(--side);color:#c9cbe6;padding:22px 14px;position:sticky;top:0;height:100vh;overflow:auto;display:flex;flex-direction:column;gap:20px}
+aside h1{font:600 21px/1.2 var(--serif);color:#fff;margin:0 6px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{font:inherit;background:none;border:0;border-left:3px solid transparent;color:#c9cbe6;text-align:left;padding:10px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.nav button:hover{background:rgba(255,255,255,.08)}
+.nav button.on{background:rgba(255,255,255,.13);color:#fff;font-weight:600;border-left-color:var(--ac2)}
+.tools{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.tools .b{background:transparent;color:#e6e7f6;border-color:rgba(255,255,255,.3)}
+.tools .b:hover{border-color:#fff}
+main{padding:24px 30px 40px;min-width:0}
+h1{font:600 20px/1.2 var(--serif);margin:0}
+h2{font:600 17px/1.3 var(--serif);margin:24px 0 8px}
+.b{font:inherit;min-height:38px;padding:7px 14px;border:1px solid var(--bd);background:var(--cd);color:var(--fg);border-radius:6px;cursor:pointer;white-space:nowrap}
+.b:hover{border-color:var(--ac)}
+.b.p{background:var(--ac);border-color:var(--ac);color:var(--on);font-weight:600}
+.b:disabled{opacity:.45;cursor:not-allowed}
+input,select{font:inherit;color:var(--fg);background:var(--cd);border:1px solid var(--bd);border-radius:6px;padding:8px 10px;min-height:38px;max-width:100%}
+td input,td select{min-height:30px;padding:3px 6px}
+input[type=checkbox]{min-height:0;width:18px;height:18px;accent-color:var(--ac)}
+.mu{color:var(--mu);font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.w{overflow:auto;border:1px solid var(--bd);border-radius:8px;background:var(--cd);margin:8px 0;max-height:max(340px,calc(100vh - 230px))}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px}
+th,td{padding:7px 10px;text-align:center;white-space:nowrap;border-right:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+th{background:var(--hd);font-weight:600;position:sticky;top:0;z-index:2}
+td.l,th.l{text-align:left;position:sticky;left:0;z-index:1;background:var(--cd)}
+th.l{background:var(--hd);z-index:3}
+td.c{cursor:pointer;min-width:40px;user-select:none}
+td.c:hover{outline:2px solid var(--ac);outline-offset:-2px}
+td.y{background:var(--ok);color:var(--okf);font-weight:700}
+td.n{background:var(--ko);color:var(--kof)}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:0 0 20px}
+.k div{background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;color:var(--mu);font-size:13px}
+.k b{display:block;font:600 22px/1.25 var(--serif);color:var(--fg);margin-top:2px}
+.k .hero{grid-column:1/-1;order:-1;background:var(--side);border:0;border-left:6px solid var(--ac2);border-radius:12px;color:#c9cbe6;padding:20px 24px;font-size:15px}
+.k .hero b{font-size:42px;color:#fff}
+.ph{display:none}.ph h1{font-size:16px}
+@media(max-width:819px){
+.shell{display:block}aside{display:contents}
+aside h1{background:var(--side);padding:14px 16px 6px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;flex-direction:row;overflow-x:auto;background:var(--side);padding:6px 10px 0}
+.nav button{border-left:0;border-bottom:3px solid transparent;border-radius:6px 6px 0 0}
+.nav button.on{border-bottom-color:var(--ac2)}
+.tools{flex-direction:row;flex-wrap:wrap;padding:10px 12px 0}
+.tools .b{background:var(--cd);color:var(--fg);border-color:var(--bd)}
+main{padding:10px 12px 32px}
+.w{max-height:none}
+.k .hero b{font-size:34px}
+}
+@media(prefers-reduced-motion:no-preference){.b,.nav button{transition:background-color .12s,border-color .12s}}
+@page{size:A4 landscape;margin:8mm}
+@media print{:root{--bg:#fff;--fg:#000;--bd:#555;--ok:#fff;--ko:#fff;--okf:#000;--kof:#000;--cd:#fff;--hd:#e5e5e5}body{background:#fff;color:#000;font-size:9pt}.np{display:none!important}.shell{display:block}main{padding:0}.ph{display:block}table{font-size:8pt}th,td{padding:1px 3px;position:static!important}td.y{font-weight:700}.w{overflow:visible;max-height:none;border:0}}
+</style></head><body><div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const K='assoc_v1',AM=5000,CO=5000,DE=10000;
+const fm=n=>Math.round(n).toLocaleString('fr-FR')+' F';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function def(){return{nom:'Association des femmes',mem:Array.from({length:35},(_,i)=>({id:'m'+(i+1),n:'Membre '+(i+1)})),pay:{},dec:[{id:'d1',who:'',date:'',ex:false,rem:false},{id:'d2',who:'',date:'',ex:false,rem:false}],mv:[],extraMonths:[],locked:false}}
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}if(!S||!S.mem)S=def();S.extraMonths=S.extraMonths||[];S.locked=!!S.locked;S.mem.forEach(m=>{m.closed=!!m.closed;m.closedOn=m.closedOn||''});
+let V='cot',F=S.mem[0].id,dl=null;
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const P=id=>S.pay[id]||(S.pay[id]={a:0,m:{},d:{}});
+function months(){
+ const byKey=new Map(),r=[],t=new Date();let y=2025,m=8;
+ for(;;){const d=new Date(y,m+1,0);d.setDate(d.getDate()-d.getDay());if(d>t)break;const k=y+'-'+(m+1);byKey.set(k,{k,d});if(++m>11){m=0;y++}}
+ (S.extraMonths||[]).forEach(x=>{if(x&&x.k&&x.d){const d=new Date(x.d+'T12:00:00');if(!isNaN(d))byKey.set(x.k,{k:x.k,d})}});
+ byKey.forEach(x=>r.push(x));r.sort((a,b)=>a.d-b.d);return r
+}
+const fd=d=>d?new Date(d).toLocaleDateString('fr-FR'):'—';
+const sd=d=>d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+const dd=(m,d)=>(d.ex&&d.who===m.id)?0:DE;
+const locked=()=>!!S.locked;
+const canOweMonth=(m,x)=>!m.closed||!m.closedOn||x.d<=new Date(m.closedOn+'T23:59:59');
+function st(m){const p=P(m.id),M=months();let nm=M.filter(x=>p.m[x.k]).length,dp=0,dt=0;S.dec.forEach(d=>{const v=dd(m,d);dt+=v;if(p.d[d.id]&&v)dp+=v});
+const due=AM+M.length*CO+dt,paid=(p.a?AM:0)+nm*CO+dp;return{nm,n:M.length,a:p.a,dp,dt,due,paid,rest:due-paid,cot:nm*CO}}
+function tot(){let a=0,c=0,dp=0,dt=0,rest=0;S.mem.forEach(m=>{const s=st(m);a+=s.a?AM:0;c+=s.cot;dp+=s.dp;dt+=s.dt;rest+=s.rest});
+let en=0,so=0;S.mv.forEach(x=>x.t=='e'?en+=+x.v:so+=+x.v);return{a,c,dp,dt,rest,en,so,caisse:a+c+en-so}}
+function tg(id,k){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');const p=P(id);k=='a'?p.a=p.a?0:1:p.m[k]=p.m[k]?0:1;save();R()}
+function tgd(id,d){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');const p=P(id);p.d[d]=p.d[d]?0:1;save();R()}
+const tabs=[['cot','Cotisations'],['dec','Décès'],['cai','Caisse'],['bil','Bilan'],['fic','Fiche membre'],['mem','Membres']];
+const head=t=>`<div class="ph"><h1>${esc(S.nom)} — ${t}</h1><div class="mu">Édité le ${new Date().toLocaleDateString('fr-FR')}</div></div>`;
+function vCot(){const M=months();let h=head('Cotisations mensuelles (5 000 F)')+`<div class="mu np">Touchez une case pour marquer payé ✓. Cotisation chaque dernier dimanche du mois.</div><div class="row np"><input id="newMonthDate" type="date"><button class="b p" onclick="addMonth()">+ Ajouter une date</button></div><div class="mu np">Choisissez la date de cotisation à ajouter. Les anciennes dates et les paiements déjà enregistrés sont conservés.</div><div class="w"><table><tr><th>N°</th><th class="l">Nom</th><th>Adh.</th>${M.map(x=>`<th>${sd(x.d)}</th>`).join('')}<th>Total</th></tr>`;
+S.mem.forEach((m,i)=>{const p=P(m.id),s=st(m);h+=`<tr><td>${i+1}</td><td class="l">${esc(m.n)}</td><td class="c ${p.a?'y':'n'}" onclick="tg('${m.id}','a')">${p.a?'✓':''}</td>${M.map(x=>canOweMonth(m,x)?`<td class="c ${p.m[x.k]?'y':'n'}" onclick="tg('${m.id}','${x.k}')">${p.m[x.k]?'✓':''}</td>`:'<td>—</td>').join('')}<td>${fm((p.a?AM:0)+s.cot)}</td></tr>`});
+h+=`<tr><th colspan="3" class="l">Payées</th>${M.map(x=>`<th>${S.mem.filter(m=>P(m.id).m[x.k]).length}</th>`).join('')}<th></th></tr></table></div>`;return h}
+function vDec(){let h=head('Funérailles (10 000 F par membre)')+`<div class="np"><button class="b p" onclick="addD()">+ Ajouter un décès</button></div><div class="w"><table><tr><th>N°</th><th class="l">Membre concernée</th><th>Date</th><th class="np">Exempter</th><th>Remis</th><th class="np"></th></tr>`;
+S.dec.forEach((d,i)=>{h+=`<tr><td>${i+1}</td><td class="l"><select class="np" onchange="ud('${d.id}','who',this.value)"><option value="">—</option>${S.mem.map(m=>`<option value="${m.id}"${m.id===d.who?' selected':''}>${esc(m.n)}</option>`).join('')}</select><span class="ph">${esc((S.mem.find(m=>m.id===d.who)||{n:'—'}).n)}</span></td><td><input class="np" type="date" value="${d.date}" onchange="ud('${d.id}','date',this.value)"><span class="ph">${fd(d.date)}</span></td><td class="np"><input type="checkbox"${d.ex?' checked':''} onchange="ud('${d.id}','ex',this.checked)"></td><td onclick="ud('${d.id}','rem',!${d.rem})" class="c ${d.rem?'y':'n'}">${d.rem?'✓':''}</td><td class="np"><button class="b" onclick="delD('${d.id}')">✕</button></td></tr>`});
+h+=`</table></div><h2>Qui a payé</h2><div class="w"><table><tr><th>N°</th><th class="l">Nom</th>${S.dec.map((d,i)=>`<th>Décès ${i+1}</th>`).join('')}<th>Payé</th><th>Reste</th></tr>`;
+S.mem.forEach((m,i)=>{const p=P(m.id),s=st(m);h+=`<tr><td>${i+1}</td><td class="l">${esc(m.n)}</td>${S.dec.map(d=>dd(m,d)?`<td class="c ${p.d[d.id]?'y':'n'}" onclick="tgd('${m.id}','${d.id}')">${p.d[d.id]?'✓':''}</td>`:'<td>—</td>').join('')}<td>${fm(s.dp)}</td><td>${fm(s.dt-s.dp)}</td></tr>`});
+return h+'</table></div>'}
+function vCai(){const t=tot();let h=head('Caisse')+`<div class="k"><div>Adhésions<b>${fm(t.a)}</b></div><div>Cotisations<b>${fm(t.c)}</b></div><div>Autres entrées<b>${fm(t.en)}</b></div><div>Sorties<b>${fm(t.so)}</b></div><div class="hero">Solde de la caisse<b>${fm(t.caisse)}</b></div><div>Deuils collectés<b>${fm(t.dp)}</b><span class="mu">sur ${fm(t.dt)} attendus (reversés aux membres concernées, hors caisse)</span></div></div>
+<div class="np"><h2>Autre mouvement</h2><div class="row"><input id="mdt" type="date"><select id="mt"><option value="s">Sortie</option><option value="e">Entrée</option></select><input id="mm" placeholder="Motif"><input id="mv" type="number" placeholder="Montant"><button class="b p" onclick="addM()">Ajouter</button></div></div><div class="w"><table><tr><th>Date</th><th>Type</th><th class="l">Motif</th><th>Montant</th><th class="np"></th></tr>`;
+S.mv.forEach((x,i)=>{h+=`<tr><td>${fd(x.d)}</td><td>${x.t=='e'?'Entrée':'Sortie'}</td><td class="l">${esc(x.m)}</td><td>${fm(x.v)}</td><td class="np"><button class="b" onclick="S.mv.splice(${i},1);save();R()">✕</button></td></tr>`});return h+'</table></div>'}
+function vBil(){const M=months();let h=head(`Bilan général au ${new Date().toLocaleDateString('fr-FR')}`)+`<div class="w"><table><tr><th>N°</th><th class="l">Nom</th><th>Adhésion</th><th>Cotis. payées</th><th>Cotisations</th><th>Deuils</th><th>Total versé</th><th>Total dû</th><th>Reste</th></tr>`;
+const t=tot();S.mem.forEach((m,i)=>{const s=st(m);h+=`<tr><td>${i+1}</td><td class="l">${esc(m.n)}</td><td>${s.a?'✓':'✗'}</td><td>${s.nm}/${s.n}</td><td>${fm(s.cot)}</td><td>${fm(s.dp)}</td><td>${fm(s.paid)}</td><td>${fm(s.due)}</td><td class="${s.rest>0?'n':'y'}"><b>${fm(s.rest)}</b></td></tr>`});
+return h+`<tr><th colspan="4" class="l">Totaux</th><th>${fm(t.c)}</th><th>${fm(t.dp)}</th><th>${fm(t.a+t.c+t.dp)}</th><th>${fm(t.a+t.c+t.dp+t.rest)}</th><th>${fm(t.rest)}</th></tr></table></div>`}
+function vFic(){const m=S.mem.find(x=>x.id===F)||S.mem[0],p=P(m.id),s=st(m),M=months();
+let h=`<div class="np row"><select onchange="F=this.value;R()">${S.mem.map(x=>`<option value="${x.id}"${x.id===m.id?' selected':''}>${esc(x.n)}</option>`).join('')}</select></div>`+head('Fiche de '+esc(m.n))+`<div class="k"><div>Statut<b>${m.closed?'Clôturé':'Actif'}</b></div><div>Total versé<b>${fm(s.paid)}</b></div><div>Total dû<b>${fm(s.due)}</b></div><div>Reste à payer<b>${fm(s.rest)}</b></div><div>Cotisations<b>${s.nm}/${s.n}</b></div></div><div class="w"><table><tr><th class="l">Élément</th><th>Date</th><th>Montant</th><th>État</th></tr><tr><td class="l">Adhésion</td><td>28/09/25</td><td>${fm(AM)}</td><td class="${p.a?'y':'n'}">${p.a?'Payé ✓':'Non payé'}</td></tr>`;
+M.forEach(x=>h+=`<tr><td class="l">Cotisation</td><td>${sd(x.d)}</td><td>${fm(CO)}</td><td class="${p.m[x.k]?'y':'n'}">${p.m[x.k]?'Payé ✓':'Non payé'}</td></tr>`);
+S.dec.forEach((d,i)=>{const v=dd(m,d);h+=`<tr><td class="l">Deuil ${i+1}</td><td>${fd(d.date)}</td><td>${v?fm(v):'—'}</td><td class="${!v||p.d[d.id]?'y':'n'}">${!v?'Exemptée':p.d[d.id]?'Payé ✓':'Non payé'}</td></tr>`});return h+'</table></div>'}
+function vMem(){
+ const ro=locked()?' readonly':'';
+ let h=`<h2>Nom de l’association</h2><input value="${esc(S.nom)}"${ro} oninput="if(!locked()){S.nom=this.value;save()}"><h2>Membres (${S.mem.length})</h2><div class="row"><button class="b" ${locked()?'disabled':''} onclick="addMember()">+ Ajouter un membre</button></div>`;
+ h+=S.mem.map((m,i)=>`<div class="row" style="border-bottom:1px solid var(--bd);padding:6px 0"><span style="width:26px">${i+1}</span><input value="${esc(m.n)}" ${ro} oninput="if(!locked()){S.mem[${i}].n=this.value;save()}" style="flex:1"><span class="mu">${m.closed?'Clôturé le '+fd(m.closedOn):'Actif'}</span>${m.closed?'':'<button class="b" '+(locked()?'disabled':'')+' onclick="closeMember(\''+m.id+'\')">Clôturer</button>'}</div>`).join('');
+ h+=`<h2>Protection des données</h2><div class="row"><button class="b p" onclick="toggleLock()">${locked()?'🔓 Déverrouiller les champs':'🔒 Verrouiller les champs'}</button></div><div class="mu">${locked()?'Les modifications sont bloquées. Déverrouillez pour modifier les données.':'Les champs sont déverrouillés et peuvent être modifiés.'}</div>`;
+ h+=`<h2>Sauvegarde</h2><div class="row"><button class="b" onclick="bak()">Sauvegarder (.json)</button><input type="file" accept=".json" onchange="rest(this)"></div><div class="mu">Les données restent sur cet appareil. Faites une sauvegarde de temps en temps.</div>`;
+ return h
+}
+function toggleLock(){S.locked=!S.locked;save();R()}
+function addMember(){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');const n=prompt('Nom du nouveau membre :');if(!n||!n.trim())return;S.mem.push({id:'m'+Date.now(),n:n.trim(),closed:false,closedOn:''});save();R()}
+function closeMember(id){
+ if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');
+ const m=S.mem.find(x=>x.id===id);if(!m)return;
+ const d=prompt('Date de clôture du membre (AAAA-MM-JJ) :',new Date().toISOString().slice(0,10));if(!d)return;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||isNaN(new Date(d+'T12:00:00'))){alert('Date invalide.');return}
+ if(!confirm('Clôturer '+m.n+' à partir de cette date ? Les paiements et l’historique seront conservés et aucune nouvelle cotisation ne sera due après cette date.'))return;
+ m.closed=true;m.closedOn=d;save();R()
+}
+const VW={cot:vCot,dec:vDec,cai:vCai,bil:vBil,fic:vFic,mem:vMem};
+function R(){const A=document.getElementById('app'),keep=R.v===V,sc=keep?[...A.querySelectorAll('.w,.nav')].map(e=>[e.scrollLeft,e.scrollTop]):[];R.v=V;
+A.innerHTML=`<div class="shell"><aside class="np"><h1>${esc(S.nom)}</h1><nav class="nav">${tabs.map(t=>`<button class="${V==t[0]?'on':''}" onclick="V='${t[0]}';R()">${t[1]}</button>`).join('')}</nav><div class="tools"><button class="b" onclick="window.print()">Imprimer A4</button><button class="b" onclick="xl()">Export Excel</button><button class="b" onclick="toggleLock()">${locked()?'🔓 Déverrouiller':'🔒 Verrouiller les champs'}</button></div></aside><main>`+VW[V]()+`</main></div>`;
+A.querySelectorAll('.w,.nav').forEach((e,k)=>{if(sc[k]){e.scrollLeft=sc[k][0];e.scrollTop=sc[k][1]}})}
+function addMonth(){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');
+ const v=document.getElementById('newMonthDate').value;if(!v){alert('Choisissez une date.');return}
+ const d=new Date(v+'T12:00:00');if(isNaN(d)){alert('Date invalide.');return}
+ const k=d.getFullYear()+'-'+(d.getMonth()+1);
+ if(months().some(x=>x.k===k)){alert('Une cotisation existe déjà pour ce mois.');return}
+ S.extraMonths=S.extraMonths||[];S.extraMonths.push({k,d:v});save();R()
+}
+function addD(){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');S.dec.push({id:'d'+Date.now(),who:'',date:'',ex:false,rem:false});save();R()}
+function delD(id){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');if(confirm('Supprimer ce décès ?')){S.dec=S.dec.filter(d=>d.id!==id);save();R()}}
+function ud(id,k,v){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');S.dec.find(d=>d.id===id)[k]=v;save();R()}
+function addM(){if(locked())return alert('Champs verrouillés. Déverrouillez pour modifier.');const v=+document.getElementById('mv').value;if(!v)return;S.mv.push({d:document.getElementById('mdt').value,t:document.getElementById('mt').value,m:document.getElementById('mm').value,v});save();R()}
+function sv(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+function bak(){sv('sauvegarde-association.json',JSON.stringify(S),'application/json')}
+function rest(i){const f=i.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);if(o.mem){S=o;S.extraMonths=S.extraMonths||[];save();R()}}catch(e){alert('Fichier invalide')}})}
+function xl(){const M=months(),W=XLSX.utils.book_new(),A=(n,a)=>XLSX.utils.book_append_sheet(W,XLSX.utils.aoa_to_sheet(a),n);
+A('Bilan',[['N°','Nom','Adhésion','Cotis. payées','Cotisations','Deuils','Total versé','Total dû','Reste']].concat(S.mem.map((m,i)=>{const s=st(m);return[i+1,m.n,s.a?'Oui':'Non',s.nm+'/'+s.n,s.cot,s.dp,s.paid,s.due,s.rest]})));
+A('Cotisations',[['N°','Nom','Adhésion'].concat(M.map(x=>sd(x.d)))].concat(S.mem.map((m,i)=>{const p=P(m.id);return[i+1,m.n,p.a?'✓':''].concat(M.map(x=>p.m[x.k]?'✓':''))})));
+A('Décès',[['Décès','Membre concernée','Date','Remis'].concat(S.mem.map(m=>m.n))].concat(S.dec.map((d,i)=>[i+1,(S.mem.find(m=>m.id===d.who)||{n:''}).n,fd(d.date),d.rem?'Oui':'Non'].concat(S.mem.map(m=>dd(m,d)?(P(m.id).d[d.id]?'✓':''):'—')))));
+const t=tot();A('Caisse',[['Adhésions',t.a],['Cotisations',t.c],['Autres entrées',t.en],['Sorties',t.so],['SOLDE',t.caisse],[],['Date','Type','Motif','Montant']].concat(S.mv.map(x=>[fd(x.d),x.t=='e'?'Entrée':'Sortie',x.m,+x.v])));
+sv('association.xlsx',XLSX.write(W,{bookType:'xlsx',type:'array'}),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')}
+R();
+</script></body></html>
